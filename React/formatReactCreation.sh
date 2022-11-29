@@ -3,16 +3,16 @@
 set -e
 echo Enter app name && read NAME
 
-echo ----------
+echo ----------------------
 echo **Creating React App**
-echo ----------
+echo ----------------------
 
 npx create-react-app $NAME
 cd $NAME
 
-echo ----------
+echo -------------------
 echo **Updating folder**
-echo ----------
+echo -------------------
 
 cat > tsconfig.json <<EOL
 {
@@ -49,9 +49,9 @@ EOL
 echo Installing SCSS
 npm install --save-dev sass
 
-echo ----------
+echo -------------------
 echo **Updating public**
-echo ----------
+echo -------------------
 
 cd public
 
@@ -80,9 +80,9 @@ cat > index.html <<EOL
 </html>
 EOL
 
-echo ----------
+echo ----------------
 echo **Updating src**
-echo ----------
+echo ----------------
 
 cd ../src
 echo Deleting old files
@@ -158,9 +158,9 @@ test('Renders App', () => {
 });
 EOL
 
-echo ----------
+echo --------------------
 echo **Updating .github**
-echo ----------
+echo --------------------
 
 echo Adding workflows
 cd .. 
