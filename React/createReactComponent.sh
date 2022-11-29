@@ -1,9 +1,10 @@
 #!/bin/bash
-# MAKE SURE EXECUTION PERMS ARE ON (chmod -x ./createReactComponent.sh)
-# TO RUN (sh ./createReactComponent.sh)
+# Exit if error occurs
+set -e
+# 
 # Component name
 echo Please input a name && read NAME
-# NAME="TestComponent"
+# 
 # File path location (for the folder, relative to where this script is)
 LOCATION="./src/components/"
 #
@@ -11,5 +12,39 @@ LOCATION="./src/components/"
 cd ${LOCATION}
 mkdir ${NAME} && cd ${NAME}
 touch "${NAME}.tsx" && touch "${NAME}.test.js" && touch "${NAME}.scss"
-printf "import './${NAME}.scss';\n\nconst ${NAME} = (props) => {\n\n  return (\n    <div>${NAME}</div>\n  )\n}\n\nexport default ${NAME};" > ${NAME}.tsx
-printf "import ${NAME} from './${NAME}';" > ${NAME}.test.js
+printf "@import \"../../assets/styles/styling\";" > ${NAME}.scss
+
+cat > ${NAME}.tsx <<EOL
+import './${NAME}.scss';
+
+const ${NAME} = (props) => {
+  
+  return (
+    <div>${NAME}</div>
+  )
+}
+
+export default ${NAME};
+EOL
+
+cat > ${NAME}.test.js <<EOL
+import ${NAME} from './${NAME}';
+import { render, screen } from "@testing-library/react";
+
+const setupRender = () => {
+  return render(<${NAME} />);
+}
+
+describe('Rendering tests', () => {
+
+  test('Check rendering of component name', () => {
+    setupRender();
+
+    const componentName = screen.getByText("${NAME}");
+
+    expect(componentName).toBeInTheDocument();
+  });
+});
+
+describe('Functional tests', () => {});
+EOL

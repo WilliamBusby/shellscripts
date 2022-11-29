@@ -1,5 +1,6 @@
 #!/bin/bash
 # Creates and formats new react app for common use.
+set -e
 echo Enter app name && read NAME
 
 echo ----------
@@ -116,7 +117,32 @@ function App() {
 export default App;
 EOL
 
-printf '@import "./assets/styles/styles";\n\n* {\n  margin: 0;\n  padding: 0;\n}' > App.scss
+printf '@import "./assets/styles/styles";\n\n* {\n  margin: 0;\n  padding: 0;\n box-sizing: border-box;}' > App.scss
+
+cat > assets/styles/_variables.scss <<EOL
+// Width breakpoints
+\$mobile-breakpoint: 320px;
+\$tablet-breakpoint: 768px;
+\$desktop-breakpoint: 1024px;
+\$large-desktop-breakpoint: 1440px;
+\$extra-large-desktop-breakpoint: 2560px;
+EOL
+
+cat > assets/styles/_mixins.scss <<EOL
+@import "./variables";
+
+@mixin mediaScreenFont(\$desktop-font, \$tablet-font, \$phone-font) {
+  font-size: \$phone-font;
+
+  @media screen and (min-width: \$mobile-breakpoint) {
+    font-size: \$tablet-font;
+  }
+
+  @media screen and (min-width: \$tablet-breakpoint) {
+    font-size: \$desktop-font
+  }
+}
+EOL
 
 echo Writing to new files
 printf "@import './mixins';\n@import './functions';\n@import './variables';" > assets/styles/_styles.scss
