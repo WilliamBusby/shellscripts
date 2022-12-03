@@ -103,6 +103,7 @@ touch assets/styles/_variables.scss
 touch assets/styles/_functions.scss
 
 echo Creating App
+
 cat > App.tsx <<EOL
 import './App.scss';
 
@@ -117,7 +118,15 @@ function App() {
 export default App;
 EOL
 
-printf '@import "./assets/styles/styles";\n\n* {\n  margin: 0;\n  padding: 0;\n box-sizing: border-box;}' > App.scss
+cat > App.scss <<EOL
+@import "./assets/styles/styles";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+EOL
 
 cat > assets/styles/_variables.scss <<EOL
 // Width breakpoints
@@ -147,7 +156,7 @@ EOL
 echo Writing to new files
 printf "@import './mixins';\n@import './functions';\n@import './variables';" > assets/styles/_styles.scss
 
-cat > App.test.js <<EOL
+cat > App.test.tsx <<EOL
 import { render, screen } from '@testing-library/react';
 import App from './App';
 

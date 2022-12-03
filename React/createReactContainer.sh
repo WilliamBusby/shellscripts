@@ -22,7 +22,7 @@ const ${NAME} = (props) => {
   return (
     <div>${NAME}</div>
   )
-}
+};
 
 export default ${NAME};
 EOL
